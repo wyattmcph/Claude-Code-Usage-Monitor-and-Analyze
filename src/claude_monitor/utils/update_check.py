@@ -72,6 +72,10 @@ def startup_update_check(skip: bool = False) -> None:
     if skip:
         return
 
+    # If we can't determine the running version, skip to avoid false positives
+    if __version__ in ("unknown", ""):
+        return
+
     latest = _fetch_latest()
     if not latest or _parse_version(latest) <= _parse_version(__version__):
         return

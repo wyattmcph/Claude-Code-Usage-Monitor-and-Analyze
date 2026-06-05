@@ -19,11 +19,13 @@ def get_version() -> str:
     Returns:
         Version string (e.g., "3.0.0")
     """
-    try:
-        return importlib.metadata.version("claude-monitor")
-    except importlib.metadata.PackageNotFoundError:
-        # Fallback for development environments where package isn't installed
-        return _get_version_from_pyproject()
+    for name in ("wyattmcph-claude-monitor", "claude-monitor"):
+        try:
+            return importlib.metadata.version(name)
+        except importlib.metadata.PackageNotFoundError:
+            continue
+    # Fallback for development environments where package isn't installed
+    return _get_version_from_pyproject()
 
 
 def _get_version_from_pyproject() -> str:
@@ -70,7 +72,11 @@ def get_package_info() -> Dict[str, Optional[str]]:
         Dictionary containing version, name, and metadata
     """
     try:
-        metadata = importlib.metadata.metadata("claude-monitor")
+        _pkg = "wyattmcph-claude-monitor"
+        try:
+            metadata = importlib.metadata.metadata(_pkg)
+        except importlib.metadata.PackageNotFoundError:
+            metadata = importlib.metadata.metadata("claude-monitor")
         return {
             "version": get_version(),
             "name": metadata.get("Name"),

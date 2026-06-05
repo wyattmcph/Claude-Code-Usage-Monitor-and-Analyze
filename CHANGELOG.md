@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.3.5] - 2026-06-05
+
+### Fixed
+
+- **Infinite update loop**: `_version.py` was calling `importlib.metadata.version("claude-monitor")` — the old package name. The installed package is `wyattmcph-claude-monitor`, so the lookup always raised `PackageNotFoundError`, the pyproject.toml fallback also failed inside a uv tool environment, and `__version__` resolved to `"unknown"`. Since `"unknown"` parses as version `(0,)`, the update check always saw a newer version and looped forever. Fixed by trying `wyattmcph-claude-monitor` first, then falling back to `claude-monitor` for development installs. Added a guard in `startup_update_check` that skips the check entirely if the version is still unresolvable.
+
+[3.3.5]: https://github.com/wyattmcph/wyattmcph-claude-monitor/releases/tag/v3.3.5
+
+---
+
 ## [3.3.4] - 2026-06-05
 
 ### Added
