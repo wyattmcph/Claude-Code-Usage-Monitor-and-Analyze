@@ -6,7 +6,7 @@
 
 A real-time terminal monitor for Claude Code token usage — with keyword analytics, gradient progress bars, an animated Rich UI, and burn-rate sparklines. Track exactly where your tokens and budget are going, broken down by topic.
 
-![Claude Monitor Screenshot](https://raw.githubusercontent.com/Maciek-roboblog/Claude-Code-Usage-Monitor/main/doc/scnew.png)
+![Claude Monitor Screenshot](https://raw.githubusercontent.com/wyattmcph/wyattmcph-claude-monitor/main/doc/scnew.png)
 
 > **Fork of** [Maciek-roboblog/Claude-Code-Usage-Monitor](https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor) — extended with keyword analytics and visual improvements in v3.2.0.
 
