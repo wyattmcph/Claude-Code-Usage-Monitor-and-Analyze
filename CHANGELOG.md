@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.4.1] - 2026-06-05
+
+### Fixed
+
+- **Standalone binary crash on launch**: The bundled executable failed immediately with `ImportError: attempted relative import with no known parent package`. PyInstaller runs the entry script without package context, so the relative import `from .cli.main import main` in `__main__.py` had no parent to resolve from. Fixed by adding `_pyinstaller_entry.py` as the PyInstaller entry point — it uses absolute imports (`from claude_monitor.cli.main import main`) which work correctly in the bundle. The regular `python -m claude_monitor` path is unchanged.
+
+[3.4.1]: https://github.com/wyattmcph/wyattmcph-claude-monitor/releases/tag/v3.4.1
+
+---
+
 ## [3.4.0] - 2026-06-05
 
 ### Added

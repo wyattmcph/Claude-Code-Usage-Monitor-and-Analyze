@@ -94,7 +94,7 @@ hiddenimports = [
 ]
 
 a = Analysis(
-    ['src/claude_monitor/__main__.py'],
+    ['_pyinstaller_entry.py'],
     pathex=['src'],
     binaries=[],
     datas=datas,
