@@ -1,0 +1,18 @@
+PackageIdentifier: wyattmcph.ClaudeMonitor
+PackageVersion: 3.5.0
+MinimumOSVersion: 10.0.0.0
+InstallerType: portable
+Scope: user
+InstallModes:
+  - interactive
+  - silent
+UpgradeBehavior: install
+ReleaseDate: 2026-06-05
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/wyattmcph/wyattmcph-claude-monitor/releases/download/v3.5.0/claude-monitor-windows.exe
+    InstallerSha256: 0000000000000000000000000000000000000000000000000000000000000000
+    InstallerLocale: en-US
+    ProductCode: wyattmcph-claude-monitor
+ManifestType: installer
+ManifestVersion: 1.4.0

@@ -1,0 +1,61 @@
+PackageIdentifier: wyattmcph.ClaudeMonitor
+PackageVersion: 3.5.0
+PackageLocale: en-US
+Publisher: wyattmcph
+PublisherUrl: https://github.com/wyattmcph
+PublisherSupportUrl: https://github.com/wyattmcph/wyattmcph-claude-monitor/issues
+PackageUrl: https://github.com/wyattmcph/wyattmcph-claude-monitor
+License: MIT
+LicenseUrl: https://github.com/wyattmcph/wyattmcph-claude-monitor/blob/main/LICENSE
+CopyrightUrl: https://github.com/wyattmcph/wyattmcph-claude-monitor/blob/main/LICENSE
+ShortDescription: Real-time terminal monitor for Claude Code token usage
+Description: |-
+  A fast, beautiful terminal monitor for real-time Claude Code token usage tracking.
+  Features live token/cost display, keyword analytics, animated UI, and model-specific stats.
+
+  Features:
+  • Real-time token and cost tracking (Pro, Max 5, Max 20, or Custom plans)
+  • Keyword analytics panel to track usage by project/topic
+  • Animated gradient UI with light/dark/classic themes
+  • Adaptive layout (NANO to FULL depending on terminal size)
+  • OS notifications at 70%, 80%, 95% token usage
+  • Session history view and CSV export capabilities
+  • Smart plan auto-detection from usage history
+  • Cross-platform: Windows, macOS, Linux
+  • Popup/Picture-in-Picture mode for overlay on Claude workspace
+
+Tags:
+  - ai
+  - analytics
+  - claude
+  - dashboard
+  - developer-tools
+  - monitoring
+  - terminal
+  - token
+  - usage
+ReleaseNotes: |-
+  Version 3.5.0 - Major Release
+
+  New Features:
+  • Plan Auto-Detection: Analyzes usage history to suggest the correct plan
+  • CSV Export: Export sessions and model summaries with --export flag
+  • Session History View: View individual sessions with --view sessions
+  • OS Notifications: Alerts at 70%, 80%, 95% token usage thresholds
+  • Terminal Icon Detection: Automatically selects modern or ASCII icon sets
+  • Smarter Warnings: Enhanced approaching-limit warning logic
+
+  Improvements:
+  • Better data analysis and persistence
+  • Enhanced keyword analytics with file caching
+  • Improved window title for standalone binaries
+  • Better first-run experience with guided setup
+
+  Bug Fixes:
+  • Fixed layout rendering on terminal resize
+  • Corrected terminal capability detection
+  • Improved data loading performance
+
+ReleaseNotesUrl: https://github.com/wyattmcph/wyattmcph-claude-monitor/releases/tag/v3.5.0
+ManifestType: defaultLocale
+ManifestVersion: 1.4.0
