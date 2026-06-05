@@ -61,24 +61,18 @@ class HeaderManager:
         live_dot = AnimationState.live_dot(animation_level)
         plan_style = _PLAN_STYLE.get(plan.lower(), "header")
 
-        # Top rule with title
-        from claude_monitor.terminal.icons import ICONS as _IC
-        _h = _IC["header"]
-        title = Text(f"{_h}  CLAUDE CODE USAGE MONITOR  {_h}", style="bold header")
-        top_rule = Rule(title=title, style=plan_style)
+        # Single clean header line
+        header = Text(justify="left")
+        header.append(f"{plan.upper()}", style=f"bold {plan_style}")
+        header.append("  │  ", style="dim")
+        header.append(timezone, style="dim")
+        header.append("  │  ", style="dim")
+        header.append(f"{live_dot} LIVE", style="success")
 
-        # Subtitle line: plan badge | timezone | live dot
-        subtitle = Text(justify="center")
-        subtitle.append(f" {plan.upper()} ", style=f"bold {plan_style}")
-        subtitle.append("  │  ", style="separator")
-        subtitle.append(timezone, style="dim")
-        subtitle.append("  │  ", style="separator")
-        subtitle.append(f"{live_dot} LIVE", style="success")
+        # Top rule
+        top_rule = Rule(style=plan_style)
 
-        # Bottom rule (plain, same colour)
-        bottom_rule = Rule(style=plan_style)
-
-        return [top_rule, subtitle, bottom_rule, ""]
+        return [top_rule, header, ""]
 
     # ── Legacy create_header — now delegates to create_header_panel ────────
 

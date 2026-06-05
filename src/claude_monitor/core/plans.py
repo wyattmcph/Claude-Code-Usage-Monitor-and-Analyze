@@ -46,21 +46,21 @@ class PlanConfig:
 
 PLAN_LIMITS: Dict[PlanType, Dict[str, Any]] = {
     PlanType.PRO: {
-        "token_limit": 19_000,
-        "cost_limit": 18.0,
-        "message_limit": 250,
+        "token_limit": 200_000,
+        "cost_limit": 20.0,
+        "message_limit": 500,
         "display_name": "Pro",
     },
     PlanType.MAX5: {
-        "token_limit": 88_000,
-        "cost_limit": 35.0,
-        "message_limit": 1_000,
+        "token_limit": 1_000_000,
+        "cost_limit": 100.0,
+        "message_limit": 5_000,
         "display_name": "Max5",
     },
     PlanType.MAX20: {
-        "token_limit": 220_000,
-        "cost_limit": 140.0,
-        "message_limit": 2_000,
+        "token_limit": 4_000_000,
+        "cost_limit": 400.0,
+        "message_limit": 20_000,
         "display_name": "Max20",
     },
     PlanType.CUSTOM: {
