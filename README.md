@@ -1,6 +1,6 @@
 # 🎯 Claude Code Usage Monitor
 
-[![PyPI Version](https://img.shields.io/pypi/v/claude-monitor.svg)](https://pypi.org/project/claude-monitor/)
+[![PyPI Version](https://img.shields.io/pypi/v/wyattmcph-claude-monitor.svg)](https://pypi.org/project/wyattmcph-claude-monitor/)
 [![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -40,7 +40,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ```bash
 # Then install the monitor
-uv tool install claude-monitor
+uv tool install wyattmcph-claude-monitor
 
 # Run it
 claude-monitor
@@ -49,18 +49,18 @@ claude-monitor
 ### pip
 
 ```bash
-pip install claude-monitor
+pip install wyattmcph-claude-monitor
 claude-monitor
 ```
 
 ### pipx
 
 ```bash
-pipx install claude-monitor
+pipx install wyattmcph-claude-monitor
 claude-monitor
 ```
 
-### Install from this fork (latest changes)
+### Install from source (latest changes)
 
 ```bash
 pip install git+https://github.com/wyattmcph/Claude-Code-Usage-Monitor-and-Analyze.git

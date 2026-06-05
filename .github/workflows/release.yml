@@ -95,9 +95,10 @@
            ls -la dist/
 
        - name: Publish to PyPI
-         uses: pypa/gh-action-pypi-publish@release/v1
-         with:
-           skip-existing: true
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          skip-existing: true
 
    notify-success:
      needs: [check-version, release]
