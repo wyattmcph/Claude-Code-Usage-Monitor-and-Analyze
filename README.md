@@ -12,10 +12,34 @@ Fork of [Maciek-roboblog/Claude-Code-Usage-Monitor](https://github.com/Maciek-ro
 
 ## Installation
 
-**uv (recommended)**
+### Download a binary (no Python required)
+
+Go to the [Releases page](https://github.com/wyattmcph/wyattmcph-claude-monitor/releases/latest) and download the file for your platform:
+
+| Platform | File |
+|----------|------|
+| Windows | `claude-monitor-windows.exe` |
+| macOS | `claude-monitor-macos` |
+| Linux | `claude-monitor-linux` |
+
+**Windows:** Double-click to run, or run it from any terminal. Windows Defender may show a SmartScreen warning the first time — click "More info" then "Run anyway". This happens because the executable is not code-signed.
+
+**macOS:** Right-click the file and choose Open the first time, then click Open in the dialog. macOS blocks unsigned binaries from double-clicking until you explicitly allow them once. After that it runs normally.
+
+**Linux:**
+```bash
+chmod +x claude-monitor-linux
+./claude-monitor-linux
+```
+
+---
+
+### Install with uv or pip (Python required)
+
+If you already have Python set up and prefer package management:
 
 ```powershell
-# Install uv on Windows if you don't have it
+# Windows — install uv if you don't have it
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
@@ -29,21 +53,14 @@ uv tool install wyattmcph-claude-monitor
 claude-monitor
 ```
 
-**pip**
+Or with pip:
 
 ```bash
 pip install wyattmcph-claude-monitor
 claude-monitor
 ```
 
-**pipx**
-
-```bash
-pipx install wyattmcph-claude-monitor
-claude-monitor
-```
-
-**From source**
+**From source:**
 
 ```bash
 pip install git+https://github.com/wyattmcph/wyattmcph-claude-monitor.git

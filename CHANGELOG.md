@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.4.0] - 2026-06-05
+
+### Added
+
+- **Standalone executables**: Every release now ships pre-built binaries for Windows, macOS, and Linux. Download from the Releases page and run — no Python, no pip, nothing else to install.
+  - `claude-monitor-windows.exe` — Windows 10/11
+  - `claude-monitor-macos` — macOS (Intel; runs on Apple Silicon via Rosetta)
+  - `claude-monitor-linux` — Linux x86_64
+- `claude-monitor.spec` added for local PyInstaller builds.
+
+[3.4.0]: https://github.com/wyattmcph/wyattmcph-claude-monitor/releases/tag/v3.4.0
+
+---
+
 ## [3.3.5] - 2026-06-05
 
 ### Fixed

@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  # ── 1. Decide whether this push bumps the version ──────────────────────────
   check-version:
     runs-on: ubuntu-latest
     outputs:
@@ -21,20 +22,18 @@ jobs:
         run: |
           VERSION=$(grep '^version = ' pyproject.toml | sed 's/version = "\(.*\)"/\1/')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Version: $VERSION"
 
-      - name: Check if tag exists
+      - name: Check if tag already exists
         id: check
         run: |
           VERSION="${{ steps.extract.outputs.version }}"
           if git rev-parse "v$VERSION" >/dev/null 2>&1; then
-            echo "Tag v$VERSION already exists"
             echo "should_release=false" >> $GITHUB_OUTPUT
           else
-            echo "Tag v$VERSION does not exist"
             echo "should_release=true" >> $GITHUB_OUTPUT
           fi
 
+  # ── 2. Tag, create GitHub Release, publish Python package to PyPI ──────────
   release:
     needs: check-version
     if: needs.check-version.outputs.should_release == 'true'
@@ -54,20 +53,12 @@ jobs:
       - name: Set up Python
         run: uv python install
 
-      - name: Extract changelog for version
+      - name: Extract changelog for this version
         id: changelog
         run: |
           VERSION="${{ needs.check-version.outputs.version }}"
-          echo "Extracting changelog for version $VERSION"
-
-          sed -n "/^## \[$VERSION\]/,/^## \[/{/^## \[$VERSION\]/d; /^## \[/q; /^$/d; p}" CHANGELOG.md > release_notes.md
-
-          if [ ! -s release_notes.md ]; then
-            echo "No specific changelog found for version $VERSION" > release_notes.md
-          fi
-
-          echo "Release notes:"
-          cat release_notes.md
+          sed -n "/^## \[$VERSION\]/,/^## \[/{/^## \[$VERSION\]/d; /^## \[/q; /^---$/d; /^$/d; p}" CHANGELOG.md > release_notes.md
+          [ -s release_notes.md ] || echo "Release v$VERSION" > release_notes.md
 
       - name: Create git tag
         run: |
@@ -81,12 +72,12 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ needs.check-version.outputs.version }}
-          name: Release v${{ needs.check-version.outputs.version }}
+          name: v${{ needs.check-version.outputs.version }}
           body_path: release_notes.md
           draft: false
           prerelease: false
 
-      - name: Build package
+      - name: Build Python package
         run: |
           uv build
           ls -la dist/
@@ -97,13 +88,73 @@ jobs:
           password: ${{ secrets.PYPI_API_TOKEN }}
           skip-existing: true
 
-  notify-success:
+  # ── 3. Build standalone executables for each platform ──────────────────────
+  build-binaries:
     needs: [check-version, release]
+    if: needs.check-version.outputs.should_release == 'true'
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false      # if one platform fails, keep building the others
+      matrix:
+        include:
+          - os: windows-latest
+            asset_name: claude-monitor-windows.exe
+            binary_path: dist/claude-monitor.exe
+
+          - os: ubuntu-latest
+            asset_name: claude-monitor-linux
+            binary_path: dist/claude-monitor
+
+          - os: macos-13           # Intel x86_64 — runs on Intel and M1/M2 via Rosetta
+            asset_name: claude-monitor-macos
+            binary_path: dist/claude-monitor
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package and PyInstaller
+        run: |
+          pip install -e "."
+          pip install pyinstaller
+
+      - name: Build executable
+        run: pyinstaller claude-monitor.spec
+
+      - name: Rename binary to platform name
+        shell: bash
+        run: mv "${{ matrix.binary_path }}" "dist/${{ matrix.asset_name }}"
+
+      - name: Make executable (non-Windows)
+        if: matrix.os != 'windows-latest'
+        run: chmod +x "dist/${{ matrix.asset_name }}"
+
+      - name: Upload binary to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.check-version.outputs.version }}
+          files: dist/${{ matrix.asset_name }}
+
+  # ── 4. Summary ───────────────────────────────────────────────────────────────
+  notify-success:
+    needs: [check-version, release, build-binaries]
     if: needs.check-version.outputs.should_release == 'true' && success()
     runs-on: ubuntu-latest
     steps:
-      - name: Success notification
+      - name: Print release summary
         run: |
-          echo "Successfully released v${{ needs.check-version.outputs.version }}!"
-          echo "- GitHub Release: https://github.com/${{ github.repository }}/releases/tag/v${{ needs.check-version.outputs.version }}"
-          echo "- PyPI: https://pypi.org/project/wyattmcph-claude-monitor/${{ needs.check-version.outputs.version }}/"
+          V="${{ needs.check-version.outputs.version }}"
+          echo "Released v$V"
+          echo "  GitHub : https://github.com/${{ github.repository }}/releases/tag/v$V"
+          echo "  PyPI   : https://pypi.org/project/wyattmcph-claude-monitor/$V/"
+          echo ""
+          echo "Binaries attached to the release:"
+          echo "  claude-monitor-windows.exe"
+          echo "  claude-monitor-linux"
+          echo "  claude-monitor-macos"

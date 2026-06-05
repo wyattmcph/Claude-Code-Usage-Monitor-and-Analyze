@@ -180,6 +180,9 @@ Desktop.ini
 .python-version
 uv.lock
 
+# PyInstaller build spec — tracked in git despite the *.spec rule above
+!claude-monitor.spec
+
 # Project-specific
 # Claude monitor database (for future ML features)
 *.db
