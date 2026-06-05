@@ -100,14 +100,13 @@ class ErrorDisplayComponent:
         screen_buffer = []
 
         header_manager = HeaderManager()
-        screen_buffer.append(
+        screen_buffer.extend(
             header_manager.create_header_panel(
                 plan=plan, timezone=timezone,
                 animation_frame=AnimationState.get(),
                 animation_level="subtle",
             )
         )
-        screen_buffer.append("")
 
         screen_buffer.append("[error]Failed to get usage data[/]")
         screen_buffer.append("")
@@ -146,14 +145,13 @@ class LoadingScreenComponent:
         screen_buffer = []
 
         header_manager = HeaderManager()
-        screen_buffer.append(
+        screen_buffer.extend(
             header_manager.create_header_panel(
                 plan=plan, timezone=timezone,
                 animation_frame=AnimationState.get(),
                 animation_level="subtle",
             )
         )
-        screen_buffer.append("")
 
         screen_buffer.append("")
         screen_buffer.append("[info]⏳ Loading...[/]")

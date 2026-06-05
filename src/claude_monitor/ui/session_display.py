@@ -178,9 +178,9 @@ class SessionDisplayComponent:
 
         screen_buffer = []
 
-        # ── Animated Rich Panel header ────────────────────────────────────
+        # ── Animated header (Rule + subtitle + Rule) ─────────────────────
         header_manager = HeaderManager()
-        screen_buffer.append(
+        screen_buffer.extend(
             header_manager.create_header_panel(
                 plan=plan,
                 timezone=timezone,
@@ -188,7 +188,6 @@ class SessionDisplayComponent:
                 animation_level=animation_level,
             )
         )
-        screen_buffer.append("")
 
         if plan in ["custom", "pro", "max5", "max20"]:
             from claude_monitor.core.plans import DEFAULT_COST_LIMIT
@@ -422,7 +421,7 @@ class SessionDisplayComponent:
         screen_buffer = []
 
         header_manager = HeaderManager()
-        screen_buffer.append(
+        screen_buffer.extend(
             header_manager.create_header_panel(
                 plan=plan,
                 timezone=timezone,
@@ -430,7 +429,6 @@ class SessionDisplayComponent:
                 animation_level=animation_level,
             )
         )
-        screen_buffer.append("")
 
         empty_token_bar = self.token_progress.render(0.0)
         screen_buffer.append(f"📊 [value]Token Usage:[/]    {empty_token_bar}")
