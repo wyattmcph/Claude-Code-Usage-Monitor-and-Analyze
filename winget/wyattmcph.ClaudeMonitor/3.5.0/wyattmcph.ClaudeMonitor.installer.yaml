@@ -11,7 +11,7 @@ ReleaseDate: 2026-06-05
 Installers:
   - Architecture: x64
     InstallerUrl: https://github.com/wyattmcph/wyattmcph-claude-monitor/releases/download/v3.5.0/claude-monitor-windows.exe
-    InstallerSha256: 0000000000000000000000000000000000000000000000000000000000000000
+    InstallerSha256: 87827c4f0c70e10e8e45446c6d2ed9600ad171e994329e76f2586a7ff6370c82
     InstallerLocale: en-US
     ProductCode: wyattmcph-claude-monitor
 ManifestType: installer
