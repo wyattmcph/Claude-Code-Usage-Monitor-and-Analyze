@@ -216,13 +216,14 @@ def _plan_first_run_check(
     detected_plan = None
     try:
         from claude_monitor.data.plan_detector import detect_plan_from_history
-        from pathlib import Path
-        from claude_monitor.core.data_fetcher import load_session_blocks
+        from claude_monitor.data.reader import load_usage_entries
+        from claude_monitor.data.analyzer import SessionAnalyzer
 
         # Load the history and detect plan
-        data_file = Path.home() / ".claude-monitor" / "session_data.json"
-        if data_file.exists():
-            blocks = load_session_blocks(data_file)
+        entries, _ = load_usage_entries()
+        if entries:
+            analyzer = SessionAnalyzer()
+            blocks = analyzer.transform_to_blocks(entries)
             if blocks:
                 detected_plan = detect_plan_from_history(blocks)
     except Exception:
