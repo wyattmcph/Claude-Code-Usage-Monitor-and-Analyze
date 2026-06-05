@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.3.4] - 2026-06-05
+
+### Added
+
+- **Auto-update on startup**: When a newer version is available on PyPI, the monitor stops before starting and asks:
+
+  ```
+    Update available: v3.x.x  (you have v3.y.y)
+    Install now? [Y/n]:
+  ```
+
+  Pressing Enter or Y runs `uv tool upgrade wyattmcph-claude-monitor` automatically. If uv is not found it falls back to pip. On a successful upgrade it exits cleanly so you restart with the new version. Typing `n` skips the update and continues to the monitor as normal. The check has a 4-second timeout and fails silently if the network is unavailable. Skipped automatically in popup mode (`--popup`) where interactive prompts are not appropriate.
+
+[3.3.4]: https://github.com/wyattmcph/wyattmcph-claude-monitor/releases/tag/v3.3.4
+
+---
+
 ## [3.3.3] - 2026-06-05
 
 ### Added

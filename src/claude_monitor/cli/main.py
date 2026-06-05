@@ -91,6 +91,14 @@ def main(argv: Optional[List[str]] = None) -> int:
         run_config_menu(args)
         return 0
 
+    # Startup update check — synchronous, prompts user, defaults to yes.
+    # Skipped in popup mode (no interactive prompts there).
+    try:
+        from claude_monitor.utils.update_check import startup_update_check
+        startup_update_check(skip="--popup" in argv)
+    except Exception:
+        pass
+
     try:
         settings = Settings.load_with_last_used(argv)
 
@@ -104,7 +112,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         except Exception:
             pass  # never crash startup over this
 
-        # Background PyPI update check (daemon thread, never blocks)
+        # Background PyPI update check (daemon thread, populates status bar notice)
         try:
             from claude_monitor.utils.update_check import UpdateChecker
             UpdateChecker.get().start()
